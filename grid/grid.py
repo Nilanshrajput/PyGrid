@@ -7,7 +7,7 @@ import sys
 
 from gevent import pywsgi
 from geventwebsocket.handler import WebSocketHandler
-
+import syfertext
 from .app import create_app
 
 parser = argparse.ArgumentParser(description="Run Grid Gateway application.")
