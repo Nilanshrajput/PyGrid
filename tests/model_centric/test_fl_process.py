@@ -1,6 +1,5 @@
 import binascii
 import json
-from tests import NETWORK_WS_URL
 from uuid import UUID
 
 import aiounittest
@@ -12,8 +11,9 @@ from torch import nn as nn
 from torch import optim as optim
 from torch.nn import functional as F
 
-from apps.node.src.app.main.sfl.models.model_manager import ModelManager
-from apps.node.src.app.main.sfl.syft_assets.plan_manager import PlanManager
+from apps.node.src.app.main.model_centric.models.model_manager import ModelManager
+from apps.node.src.app.main.model_centric.syft_assets.plan_manager import PlanManager
+from tests import NETWORK_WS_URL
 
 hook = sy.TorchHook(th)
 
@@ -42,8 +42,6 @@ async def get_protocol():
         {"type": "get-protocol", "data": {"protocolId": "test-protocol"}}
     )
 
-
-""" sample testing plans/model """
 
 # Plan Functions
 @sy.func2plan(args_shape=[(1,), (1,), (1,)])
@@ -97,10 +95,8 @@ serialized_protocol_mockup = binascii.hexlify(
     "serialized_protocol_mockup".encode("utf-8")
 ).decode()
 
-""" end sample testing plans/model """
 
-
-class StaticAPISocketsTest(aiounittest.AsyncTestCase):
+class ModelCentricAPISocketsTest(aiounittest.AsyncTestCase):
     async def test_socket_ping_alive(self):
         response = await send_ws_message({"type": "socket-ping", "data": {}})
         self.assertEqual(response, {"alive": "True"})
@@ -142,9 +138,9 @@ riWYMKALI61uc+NH0jr+B5/XTV/KlNqmbuEWfZdgRcXodNmIXt+LGHOQ1C+X+7OY
             },
         }
 
-        # "model_centric/host-training" request body
+        # "model-centric/host-training" request body
         host_training_message = {
-            "type": "model_centric/host-training",
+            "type": "model-centric/host-training",
             "data": {
                 "model": serialized_plan_model,
                 "plans": {
@@ -164,9 +160,9 @@ riWYMKALI61uc+NH0jr+B5/XTV/KlNqmbuEWfZdgRcXodNmIXt+LGHOQ1C+X+7OY
 
         """ 2 - Authentication Request """
 
-        # "model_centric/authenticate" request body
+        # "model-centric/authenticate" request body
         auth_msg = {
-            "type": "model_centric/authenticate",
+            "type": "model-centric/authenticate",
             "data": {"model_name": "my-federated-model", "model_version": "0.1.0"},
         }
 
@@ -207,7 +203,7 @@ riWYMKALI61uc+NH0jr+B5/XTV/KlNqmbuEWfZdgRcXodNmIXt+LGHOQ1C+X+7OY
         self.assertIsNotNone(worker_id)
 
         """ 3 - Cycle Request """
-        # "model_centric/cycle-request" request body
+        # "model-centric/cycle-request" request body
         req_cycle_msg = {
             "worker_id": worker_id,
             "model": "my-federated-model",
@@ -217,7 +213,7 @@ riWYMKALI61uc+NH0jr+B5/XTV/KlNqmbuEWfZdgRcXodNmIXt+LGHOQ1C+X+7OY
             "upload": 23.7,
         }
 
-        message = {"type": "model_centric/cycle-request", "data": req_cycle_msg}
+        message = {"type": "model-centric/cycle-request", "data": req_cycle_msg}
 
         # Send worker authentication message
         response = await send_ws_message(message)
@@ -257,7 +253,7 @@ riWYMKALI61uc+NH0jr+B5/XTV/KlNqmbuEWfZdgRcXodNmIXt+LGHOQ1C+X+7OY
         }
 
         host_training_message = {
-            "type": "model_centric/host-training",
+            "type": "model-centric/host-training",
             "data": {
                 "model": serialized_plan_model,
                 "plans": {
@@ -275,8 +271,8 @@ riWYMKALI61uc+NH0jr+B5/XTV/KlNqmbuEWfZdgRcXodNmIXt+LGHOQ1C+X+7OY
         await send_ws_message(host_training_message)
 
         auth_msg = {
-            "type": "model_centric/authenticate",
-            "data": {"model_name": "my-federated-model-2", "model_version": "0.1.0",},
+            "type": "model-centric/authenticate",
+            "data": {"model_name": "my-federated-model-2", "model_version": "0.1.0"},
         }
 
         response = await send_ws_message(auth_msg)
@@ -289,7 +285,7 @@ riWYMKALI61uc+NH0jr+B5/XTV/KlNqmbuEWfZdgRcXodNmIXt+LGHOQ1C+X+7OY
 
         # Speed must be required in cycle-request
         cycle_req = {
-            "type": "model_centric/cycle-request",
+            "type": "model-centric/cycle-request",
             "data": {
                 "worker_id": worker_id,
                 "model": "my-federated-model-2",
@@ -302,7 +298,7 @@ riWYMKALI61uc+NH0jr+B5/XTV/KlNqmbuEWfZdgRcXodNmIXt+LGHOQ1C+X+7OY
 
         # Should accept into cycle if all speed fields are sent
         cycle_req = {
-            "type": "model_centric/cycle-request",
+            "type": "model-centric/cycle-request",
             "data": {
                 "worker_id": worker_id,
                 "model": "my-federated-model-2",
@@ -335,7 +331,7 @@ riWYMKALI61uc+NH0jr+B5/XTV/KlNqmbuEWfZdgRcXodNmIXt+LGHOQ1C+X+7OY
         }
 
         host_training_message = {
-            "type": "model_centric/host-training",
+            "type": "model-centric/host-training",
             "data": {
                 "model": serialized_plan_model,
                 "plans": {
@@ -353,8 +349,8 @@ riWYMKALI61uc+NH0jr+B5/XTV/KlNqmbuEWfZdgRcXodNmIXt+LGHOQ1C+X+7OY
         await send_ws_message(host_training_message)
 
         auth_msg = {
-            "type": "model_centric/authenticate",
-            "data": {"model_name": "my-federated-model-3", "model_version": "0.1.0",},
+            "type": "model-centric/authenticate",
+            "data": {"model_name": "my-federated-model-3", "model_version": "0.1.0"},
         }
 
         response = await send_ws_message(auth_msg)
@@ -367,7 +363,7 @@ riWYMKALI61uc+NH0jr+B5/XTV/KlNqmbuEWfZdgRcXodNmIXt+LGHOQ1C+X+7OY
 
         # Speed is not required in cycle-request
         cycle_req = {
-            "type": "model_centric/cycle-request",
+            "type": "model-centric/cycle-request",
             "data": {
                 "worker_id": worker_id,
                 "model": "my-federated-model-3",
