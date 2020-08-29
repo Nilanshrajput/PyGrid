@@ -5,6 +5,7 @@ import json
 import syft as sy
 from flask_login import current_user
 from syft.exceptions import GetNotPermittedError
+import syfertext
 
 # Local imports
 from ... import hook, local_worker
