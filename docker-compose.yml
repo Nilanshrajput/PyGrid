@@ -10,7 +10,7 @@ services:
     ports:
       - 7000:7000
   alice:
-    image: openmined/grid-node:production
+    image: nilansh/syfertext_grid:aws_syfertext
     build: ./apps/node
     environment:
       - NODE_ID=Alice
@@ -24,7 +24,7 @@ services:
       - 5000:5000
 
   bob:
-    image: openmined/grid-node:production
+    image: nilansh/syfertext_grid:aws_syfertext
     build: ./apps/node
     environment:
       - NODE_ID=Bob
@@ -38,7 +38,7 @@ services:
       - 5001:5001
 
   charlie:
-    image: openmined/grid-node:production
+    image: nilansh/syfertext_grid:aws_syfertext
     build: ./apps/node
     environment:
       - NODE_ID=Charlie
@@ -51,7 +51,7 @@ services:
     ports:
       - 5002:5002
   dan:
-    image: openmined/grid-node:production
+    image: nilansh/syfertext_grid:aws_syfertext
     build: ./apps/node
     environment:
       - NODE_ID=Dan
