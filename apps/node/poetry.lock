@@ -1600,7 +1600,7 @@ tqdm = "4.36.1"
 test = ["black (>=20.8b1)", "pytest (>=5.3.5)", "pytest-black (>=0.3.8)", "jupyter (>=1.0.0)", "papermill (>=1.2.1)"]
 
 [package.source]
-reference = "a9455f717e2e2339334c39a449ce9b703e54af8f"
+reference = "aa91c82868b85a13002301359c4452cc418e272e"
 type = "git"
 url = "https://github.com/OpenMined/SyferText.git"
 [[package]]
@@ -1953,7 +1953,7 @@ test = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 
 [metadata]
-content-hash = "fc7ffb1136900306fbdd416289ee33c9fe84f6838bf14c85d2ed3c03d6cd15e4"
+content-hash = "46791d5dbe1be2c20dd35ffa7b1b337205f9226d53ca76d9b2e3a4bafe0e68ff"
 lock-version = "1.0"
 python-versions = "^3.7"
 
