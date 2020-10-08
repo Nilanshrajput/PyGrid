@@ -1,0 +1,21 @@
+{
+  "output_file": "config.json",
+  "provider": "aws",
+  "app": {
+    "name": "node",
+    "id": "bob",
+    "port": 5000,
+    "host": "0.0.0.0",
+    "network": "--network=0.0.0.0:7000",
+    "num_replicas": 2,
+    "start_local_db": false
+  },
+  "credentials": "~/.aws/credentials.json",
+  "deployment_type": "serverless",
+  "aws": {
+    "region": "us-east-1",
+    "instance_type": "t3.2xlarge",
+    "vpc_cidr_block": "10.0.0.0/16",
+    "subnet_cidr_block": "10.0.0.0/24"
+  }
+}

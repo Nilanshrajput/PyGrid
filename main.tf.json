@@ -1,0 +1,207 @@
+{
+  "provider": {
+    "aws": [
+      {
+        "region": "us-east-1",
+        "shared_credentials_file": "~/.aws/credentials.json"
+      }
+    ]
+  },
+  "resource": {
+    "aws_vpc": {
+      "main_vpc": {
+        "cidr_block": "10.0.0.0/16",
+        "instance_tenancy": "default",
+        "enable_dns_hostnames": true,
+        "tags": {
+          "Name": "main-vpc"
+        }
+      }
+    },
+    "aws_internet_gateway": {
+      "gw": {
+        "vpc_id": "aws_vpc.main_vpc.id",
+        "tags": {
+          "Name": "main-gw"
+        }
+      }
+    },
+    "aws_route_table": {
+      "route_table": {
+        "vpc_id": "aws_vpc.main_vpc.id",
+        "route": [
+          {
+            "cidr_block": "0.0.0.0/0",
+            "gateway_id": "aws_internet_gateway.gw.id",
+            "egress_only_gateway_id": "aws_internet_gateway.gw.id",
+            "ipv6_cidr_block": "::/0",
+            "instance_id": "",
+            "local_gateway_id": "",
+            "nat_gateway_id": "",
+            "network_interface_id": "",
+            "transit_gateway_id": "",
+            "vpc_peering_connection_id": ""
+          }
+        ],
+        "tags": {
+          "Name": "main-route-table"
+        }
+      }
+    },
+    "aws_subnet": {
+      "main_subnet": {
+        "vpc_id": "aws_vpc.main_vpc.id",
+        "cidr_block": "10.0.0.0/24",
+        "tags": {
+          "Name": "main-subnet"
+        }
+      }
+    },
+    "aws_route_table_association": {
+      "rta": {
+        "subnet_id": "aws_subnet.main_subnet.id",
+        "route_table_id": "aws_route_table.route_table.id"
+      }
+    },
+    "aws_security_group": {
+      "security_groups": {
+        "name": "allow_web_traffic",
+        "description": "Allow web inbound traffic",
+        "vpc_id": "aws_vpc.main_vpc.id",
+        "ingress": [
+          {
+            "description": "HTTPS",
+            "from_port": 443,
+            "to_port": 443,
+            "protocol": "tcp",
+            "cidr_blocks": [
+              "0.0.0.0/0"
+            ],
+            "ipv6_cidr_blocks": [
+              "::/0"
+            ],
+            "prefix_list_ids": [],
+            "security_groups": [],
+            "self": true
+          },
+          {
+            "description": "HTTP",
+            "from_port": 80,
+            "to_port": 80,
+            "protocol": "tcp",
+            "cidr_blocks": [
+              "0.0.0.0/0"
+            ],
+            "ipv6_cidr_blocks": [
+              "::/0"
+            ],
+            "prefix_list_ids": [],
+            "security_groups": [],
+            "self": true
+          },
+          {
+            "description": "PyGrid Nodes",
+            "from_port": 5000,
+            "to_port": 5999,
+            "protocol": "tcp",
+            "cidr_blocks": [
+              "0.0.0.0/0"
+            ],
+            "ipv6_cidr_blocks": [
+              "::/0"
+            ],
+            "prefix_list_ids": [],
+            "security_groups": [],
+            "self": true
+          },
+          {
+            "description": "PyGrid Workers",
+            "from_port": 6000,
+            "to_port": 6999,
+            "protocol": "tcp",
+            "cidr_blocks": [
+              "0.0.0.0/0"
+            ],
+            "ipv6_cidr_blocks": [
+              "::/0"
+            ],
+            "prefix_list_ids": [],
+            "security_groups": [],
+            "self": true
+          },
+          {
+            "description": "PyGrid Networks",
+            "from_port": 7000,
+            "to_port": 7999,
+            "protocol": "tcp",
+            "cidr_blocks": [
+              "0.0.0.0/0"
+            ],
+            "ipv6_cidr_blocks": [
+              "::/0"
+            ],
+            "prefix_list_ids": [],
+            "security_groups": [],
+            "self": true
+          }
+        ],
+        "egress": [
+          {
+            "description": "Egress Connection",
+            "from_port": 0,
+            "to_port": 0,
+            "protocol": "-1",
+            "cidr_blocks": [
+              "0.0.0.0/0"
+            ],
+            "ipv6_cidr_blocks": [
+              "::/0"
+            ],
+            "prefix_list_ids": [],
+            "security_groups": [],
+            "self": true
+          }
+        ],
+        "tags": {
+          "Name": "allow_web"
+        }
+      }
+    },
+    "aws_instance": {
+      "PyGridNodeInstance": {
+        "ami": "data.aws_ami.ubuntu.id",
+        "instance_type": "t3.2xlarge",
+        "associate_public_ip_address": true,
+        "vpc_security_group_ids": [
+          "aws_security_group.security_groups.id"
+        ],
+        "subnet_id": "aws_subnet.main_subnet.id",
+        "user_data": "\n                \n#!/bin/bash\n\n## For debugging\n# redirect stdout/stderr to a file\nexec &> log.out\n\n\necho \"Simple Web Server for testing the deployment\"\nsudo apt update -y\nsudo apt install apache2 -y\nsudo systemctl start apache2\necho \"\"\"\n<h1 style='color:#f09764; text-align:center'>\n    OpenMined First Server Deployed via Terraform\n</h1>\n\"\"\" | sudo tee /var/www/html/index.html\n\necho \"Setup Miniconda environment\"\n\nsudo wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh\nsudo bash miniconda.sh -b -p miniconda\nsudo rm miniconda.sh\nexport PATH=/miniconda/bin:$PATH > ~/.bashrc\nconda init bash\nsource ~/.bashrc\nconda create -y -n pygrid python=3.7\nconda activate pygrid\n\necho \"Install poetry...\"\npip install poetry\n\necho \"Install GCC\"\nsudo apt-get install python3-dev -y\nsudo apt-get install libevent-dev -y\nsudo apt-get install gcc -y\n\necho \"Cloning PyGrid\"\ngit clone https://github.com/OpenMined/PyGrid\n\n\n                cd /PyGrid/apps/node\n                poetry install\n                nohup ./run.sh --id bob --port 5000  --host 0.0.0.0 --network --network=0.0.0.0:7000 --num_replicas 2 \n            "
+      }
+    }
+  },
+  "data": {
+    "aws_ami": {
+      "ubuntu": {
+        "most_recent": true,
+        "filter": [
+          {
+            "name": "name",
+            "values": [
+              "ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*"
+            ]
+          },
+          {
+            "name": "virtualization-type",
+            "values": [
+              "hvm"
+            ]
+          }
+        ],
+        "owners": [
+          "099720109477"
+        ]
+      }
+    }
+  }
+}
