@@ -1602,6 +1602,7 @@ test = ["black (>=20.8b1)", "pytest (>=5.3.5)", "pytest-black (>=0.3.8)", "jupyt
 reference = "082c1ec8bd05c3d40763d92ab3a07cd88466ce30"
 type = "git"
 url = "https://github.com/OpenMined/SyferText"
+
 [[package]]
 category = "main"
 description = "A Library for Private, Secure Deep Learning"
@@ -1638,17 +1639,16 @@ websocket_client = ">=0.57.0,<0.58.0"
 websockets = ">=8.1.0,<8.2.0"
 
 [package.extras]
-dev = ["bandit", "black (>=10.3b0)", "bumpversion (>=0.5.3)", "coverage (>=4.5.3)", "interrogate (>=1.1.4)", "ipykernel (>=5.1.0)", "matplotlib (>=3.1.1,<3.2.0)", "mypy (>=0.711)", "pre-commit (>=1.16.1)", "pyopenssl (>=19.0.0)", "pyshark (>=0.4.2.4)", "pytest-randomly (>=3.2.1,<3.3.0)", "pytest (>=5.4.1)", "setuptools (>=41.0.0)", "sphinx-autoapi", "sphinx-markdown-builder (>=0.4.1)", "sphinx-rtd-theme", "Sphinx (>=2.1.1)"]
+dev = ["bandit", "black (>=10.3b0)", "bumpversion (>=0.5.3)", "coverage (>=4.5.3)", "interrogate (>=1.1.4)", "ipykernel (>=5.1.0)", "matplotlib (>=3.1.1,<3.2.0)", "mypy (>=0.711)", "pre-commit (>=1.16.1)", "pyopenssl (>=19.0.0)", "pyshark (>=0.4.2.4)", "pytest-benchmark (>=3.2.2)", "pytest-randomly (>=3.2.1,<3.3.0)", "pytest (>=5.4.1)", "setuptools (>=41.0.0)", "sphinx-autoapi", "sphinx-markdown-builder (>=0.4.1)", "sphinx-rtd-theme", "Sphinx (>=2.1.1)"]
 notebooks = ["jupyter (>=1.0.0,<1.1.0)", "notebook (5.7.8)", "matplotlib (>=3.1.1,<3.2.0)", "nltk (>=3.4.5,<3.5.0)", "papermill (>=2.0.0,<2.1.0)", "statsmodels (>=0.11.1,<0.12.0)", "scikit-learn (>=0.22.2.post1,<0.23.0)"]
 sandbox = ["scikit-learn (>=0.21.0)"]
 tensorflow = ["syft_tensorflow (>=0.1.0,<0.2.0)"]
 udacity = ["tf_encrypted (>=0.5.4,<0.6.0)"]
 
 [package.source]
-reference = "47a393bc741b5e9c67ddbe1632e72d55c3688789"
+reference = "055349ee17034a6747618b04050d2f7d1a6a49bb"
 type = "git"
-url = "https://github.com/Nilanshrajput/PySyft.git"
-
+url = "https://github.com/OpenMined/PySyft"
 [[package]]
 category = "main"
 description = "PySyft protocol constants."
@@ -1952,7 +1952,7 @@ test = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 
 [metadata]
-content-hash = "b4055b3c6e8b309c6cc4c6346b5a704115533e774d1709b08e3d8ca5f224f6ab"
+content-hash = "9a61b47b83ff8d839044fcec512b45aa569aa4f2a97fb3bc9af8c069039150be"
 lock-version = "1.0"
 python-versions = "^3.7"
 
