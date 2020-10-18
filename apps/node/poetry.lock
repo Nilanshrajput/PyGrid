@@ -1592,17 +1592,16 @@ version = "0.1.0"
 [package.dependencies]
 mmh3 = "2.5.1"
 requests = "2.22.0"
-syft = "rev GridClients_Serialize_correction"
+syft = "branch master"
 tqdm = "4.36.1"
 
 [package.extras]
 test = ["black (>=20.8b1)", "pytest (>=5.3.5)", "pytest-black (>=0.3.8)", "jupyter (>=1.0.0)", "papermill (>=1.2.1)"]
 
 [package.source]
-reference = "082c1ec8bd05c3d40763d92ab3a07cd88466ce30"
+reference = "0bc0fba2ddd5353f3079238a0337f4788274f4fc"
 type = "git"
 url = "https://github.com/OpenMined/SyferText"
-
 [[package]]
 category = "main"
 description = "A Library for Private, Secure Deep Learning"
@@ -1649,6 +1648,7 @@ udacity = ["tf_encrypted (>=0.5.4,<0.6.0)"]
 reference = "055349ee17034a6747618b04050d2f7d1a6a49bb"
 type = "git"
 url = "https://github.com/OpenMined/PySyft"
+
 [[package]]
 category = "main"
 description = "PySyft protocol constants."
