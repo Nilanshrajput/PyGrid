@@ -1,7 +1,7 @@
 version: '3'
 services:
   network:
-    image: unbiased/grid-network:production
+    image: openmined/grid-network:production
     build: ./apps/network
     environment:
       - PORT=7000
@@ -65,7 +65,7 @@ services:
       - 5003:5003
 
   jupyter:
-    image: unbiased/pysyft-notebook:demo  # syft 0.2.9
+    image: openmined/pysyft-notebook  # syft 0.2.9
     depends_on:
       - 'dan'
     ports:
