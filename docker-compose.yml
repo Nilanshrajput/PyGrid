@@ -1,7 +1,7 @@
 version: '3'
 services:
   network:
-    image: openmined/grid-network:production
+    image: unbiased/grid-network:production
     build: ./apps/network
     environment:
       - PORT=7000
@@ -10,11 +10,11 @@ services:
     ports:
       - 7000:7000
   alice:
-    image: openmined/grid-node:production
+    image: unbiased/grid-node:demo
     build: ./apps/node
     environment:
-      - NODE_ID=Alice
-      - ADDRESS=http://alice:5000/
+      - NODE_ID=research_center2
+      - ADDRESS=http://research_center2:5000/
       - PORT=5000
       - NETWORK=http://network:7000
       - DATABASE_URL=sqlite:///databasenode.db
@@ -24,11 +24,11 @@ services:
       - 5000:5000
 
   bob:
-    image: openmined/grid-node:production
+    image: unbiased/grid-node:demo
     build: ./apps/node
     environment:
-      - NODE_ID=Bob
-      - ADDRESS=http://bob:5001/
+      - NODE_ID=research_center1
+      - ADDRESS=http://research_center1:5001/
       - PORT=5001
       - NETWORK=http://network:7000
       - DATABASE_URL=sqlite:///databasenode.db
@@ -38,11 +38,11 @@ services:
       - 5001:5001
 
   charlie:
-    image: openmined/grid-node:production
+    image: unbiased/grid-node:demo
     build: ./apps/node
     environment:
-      - NODE_ID=Charlie
-      - ADDRESS=http://charlie:5002/
+      - NODE_ID=Hospital_A
+      - ADDRESS=http://Hospital_A:5002/
       - PORT=5002
       - NETWORK=http://network:7000
       - DATABASE_URL=sqlite:///databasenode.db
@@ -51,11 +51,11 @@ services:
     ports:
       - 5002:5002
   dan:
-    image: openmined/grid-node:production
+    image: unbiased/grid-node:demo
     build: ./apps/node
     environment:
-      - NODE_ID=Dan
-      - ADDRESS=http://dan:5003/
+      - NODE_ID=Hospital_B
+      - ADDRESS=http://Hospital_B:5003/
       - PORT=5003
       - NETWORK=http://network:7000
       - DATABASE_URL=sqlite:///databasenode.db
@@ -65,7 +65,7 @@ services:
       - 5003:5003
 
   jupyter:
-    image: openmined/pysyft-notebook:3852ca9e78d5163b52776b231f469e32e6c8be01  # syft 0.2.9
+    image: unbiased/pysyft-notebook:demo  # syft 0.2.9
     depends_on:
       - 'dan'
     ports:

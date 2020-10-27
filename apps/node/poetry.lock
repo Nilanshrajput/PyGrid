@@ -440,17 +440,6 @@ version = "0.9.3"
 Flask = "*"
 
 [[package]]
-category = "dev"
-description = "Python3.6+ module to make Flask compatible with AWS Lambda"
-name = "flask-lambda-python36"
-optional = false
-python-versions = "*"
-version = "0.1.0"
-
-[package.dependencies]
-Flask = ">=0.10"
-
-[[package]]
 category = "main"
 description = "Python3.6+ module to make Flask compatible with AWS Lambda"
 name = "flask-lambda-python36"
@@ -1697,7 +1686,7 @@ Pillow = ">=7.1.0"
 RestrictedPython = ">=5.0,<6.0"
 aiortc = "0.9.28"
 dill = ">=0.3.1,<0.4.0"
-flask-socketio = ">=4.2.1,<4.3.0"
+flask_socketio = ">=4.2.1,<4.3.0"
 importlib-resources = ">=1.5.0,<1.6.0"
 lz4 = ">=3.0.2,<3.1.0"
 msgpack = ">=1.0.0,<1.1.0"
@@ -1715,16 +1704,20 @@ tblib = ">=1.6.0,<1.7.0"
 torch = ">=1.4.0,<1.5.0"
 torchvision = ">=0.5.0,<0.6.0"
 tornado = "4.5.3"
-websocket-client = ">=0.57.0,<0.58.0"
+websocket_client = ">=0.57.0,<0.58.0"
 websockets = ">=8.1.0,<8.2.0"
 
 [package.extras]
-dev = ["bandit", "black (>=10.3b0)", "bumpversion (>=0.5.3)", "coverage (>=4.5.3)", "interrogate (>=1.1.4)", "ipykernel (>=5.1.0)", "matplotlib (>=3.1.1,<3.2.0)", "mypy (>=0.711)", "pre-commit (>=1.16.1)", "pyopenssl (>=19.0.0)", "pyshark (>=0.4.2.4)", "pytest-randomly (>=3.2.1,<3.3.0)", "pytest (>=5.4.1)", "setuptools (>=41.0.0)", "sphinx-autoapi", "sphinx-markdown-builder (>=0.4.1)", "sphinx-rtd-theme", "Sphinx (>=2.1.1)"]
+dev = ["bandit", "black (>=10.3b0)", "bumpversion (>=0.5.3)", "coverage (>=4.5.3)", "interrogate (>=1.1.4)", "ipykernel (>=5.1.0)", "matplotlib (>=3.1.1,<3.2.0)", "mypy (>=0.711)", "pre-commit (>=1.16.1)", "pyopenssl (>=19.0.0)", "pyshark (>=0.4.2.4)", "pytest-benchmark (>=3.2.2)", "pytest-randomly (>=3.2.1,<3.3.0)", "pytest (>=5.4.1)", "setuptools (>=41.0.0)", "sphinx-autoapi", "sphinx-markdown-builder (>=0.4.1)", "sphinx-rtd-theme", "Sphinx (>=2.1.1)"]
 notebooks = ["jupyter (>=1.0.0,<1.1.0)", "notebook (5.7.8)", "matplotlib (>=3.1.1,<3.2.0)", "nltk (>=3.4.5,<3.5.0)", "papermill (>=2.0.0,<2.1.0)", "statsmodels (>=0.11.1,<0.12.0)", "scikit-learn (>=0.22.2.post1,<0.23.0)"]
 sandbox = ["scikit-learn (>=0.21.0)"]
-tensorflow = ["syft-tensorflow (>=0.1.0,<0.2.0)"]
-udacity = ["tf-encrypted (>=0.5.4,<0.6.0)"]
+tensorflow = ["syft_tensorflow (>=0.1.0,<0.2.0)"]
+udacity = ["tf_encrypted (>=0.5.4,<0.6.0)"]
 
+[package.source]
+reference = "d811ef1e91e5e2c84fbbf1edf61e6983380b4d16"
+type = "git"
+url = "https://github.com/OpenMined/PySyft"
 [[package]]
 category = "main"
 description = "PySyft protocol constants."
@@ -2028,7 +2021,7 @@ test = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 
 [metadata]
-content-hash = "321966ac8fa39c5964d65f3dcc79fb02748b5c3e32da32e033c86f63397bf5ba"
+content-hash = "395f7feeb54365588013bad9d4c7d924561d7358f2b1540f42b3c26bde8e9162"
 lock-version = "1.0"
 python-versions = "^3.7"
 
@@ -3109,10 +3102,7 @@ sqlalchemy-mixins = [
 sqlalchemy-utils = [
     {file = "SQLAlchemy-Utils-0.36.8.tar.gz", hash = "sha256:fb66e9956e41340011b70b80f898fde6064ec1817af77199ee21ace71d7d6ab0"},
 ]
-syft = [
-    {file = "syft-0.2.9-py3-none-any.whl", hash = "sha256:f4e6734d64c0c72898e83631902977f86c61d305ffe1b2812e3328d41f7d2343"},
-    {file = "syft-0.2.9.tar.gz", hash = "sha256:37d2de1b5bcfefc952cc6dcb59f23b8b4b3036e7e8547a57a6245013dee79968"},
-]
+syft = []
 syft-proto = [
     {file = "syft-proto-0.5.2.tar.gz", hash = "sha256:e83580670b63d50744b219ced59b04c75fd150e9d9577c898129c820089c4024"},
     {file = "syft_proto-0.5.2-py3-none-any.whl", hash = "sha256:5129408c98ff48f4df23229e1853857ed9f178b6effef8d023fdbcff0233f906"},
