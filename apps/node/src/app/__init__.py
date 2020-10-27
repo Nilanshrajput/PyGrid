@@ -198,6 +198,36 @@ def create_app(node_id: str, debug=False, n_replica=None, test_config=None) -> F
     app.config["EXECUTOR_PROPAGATE_EXCEPTIONS"] = True
     app.config["EXECUTOR_TYPE"] = "thread"
 
+    from sklearn.datasets import load_boston
+    from sklearn.datasets import load_breast_cancer
+    from sklearn.datasets import load_digits
+    from sklearn.datasets import load_diabetes
+    import torch
+
+    def load_sklearn(func, *tags):
+        dataset = func()
+        data = (
+            torch.tensor(dataset["data"])
+            .float()
+            .tag(*(list(tags) + ["#data"] + dataset["DESCR"].split("\n")[0].lower().split(" ")))
+            .describe(dataset["DESCR"])
+        )
+        target = (
+            torch.tensor(dataset["target"])
+            .float()
+            .tag(
+                *(list(tags) + ["#target"] + dataset["DESCR"].split("\n")[0].lower().split(" "))
+            )
+            .describe(dataset["DESCR"])
+        )
+        local_worker.register_obj(data)
+        local_worker.register_obj(target)
+
+        return data, target
+    load_sklearn(load_boston, *["#boston", "#housing", "#boston_housing"])
+    load_sklearn(load_diabetes, *["#diabetes"])
+    load_sklearn(load_breast_cancer)
+
     return app
 
 
@@ -285,35 +315,7 @@ def create_lambda_app(node_id: str) -> FlaskLambda:
     app.config["EXECUTOR_PROPAGATE_EXCEPTIONS"] = True
     app.config["EXECUTOR_TYPE"] = "thread"
 
-    from sklearn.datasets import load_boston
-    from sklearn.datasets import load_breast_cancer
-    from sklearn.datasets import load_digits
-    from sklearn.datasets import load_diabetes
-    import torch
-
-    def load_sklearn(func, *tags):
-        dataset = func()
-        data = (
-            torch.tensor(dataset["data"])
-            .float()
-            .tag(*(list(tags) + ["#data"] + dataset["DESCR"].split("\n")[0].lower().split(" ")))
-            .describe(dataset["DESCR"])
-        )
-        target = (
-            torch.tensor(dataset["target"])
-            .float()
-            .tag(
-                *(list(tags) + ["#target"] + dataset["DESCR"].split("\n")[0].lower().split(" "))
-            )
-            .describe(dataset["DESCR"])
-        )
-        local_worker.register_obj(data)
-        local_worker.register_obj(target)
-
-        return data, target
-    load_sklearn(load_boston, *["#boston", "#housing", "#boston_housing"])
-    load_sklearn(load_diabetes, *["#diabetes"])
-    load_sklearn(load_breast_cancer)
+    
 
     return app
 
